@@ -1,0 +1,194 @@
+body {
+  background: #fafafa;
+  color: #333333;
+  margin-top: 0rem;
+}
+
+ h2, h3, h4, h5, h6 {
+  color: #444444;
+}
+
+.bg-steel {
+  background-color: #5f788a;
+}
+
+nav .navbar-brand
+{
+    font-size: xx-large;
+}
+
+/* Colors for brand */
+nav .navbar-brand .blue
+{
+    color: #537fbe;
+}
+
+main .content-section .blue {
+  color: #537fbe;
+  font-size: xx-large;
+}
+
+
+
+.site-header .navbar-nav .nav-link {
+  color: #537fbe;
+}
+
+.site-header .navbar-nav .nav-link:hover {
+  color: #153561;
+}
+
+.site-header .navbar-nav .nav-link.active {
+  font-weight: 500;
+}
+
+
+
+
+.content-section {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  margin-top: 15px;
+}
+
+.container .content-section .list-group .nav-link {
+  color: #537fbe;
+}
+
+.container .content-section .list-group .nav-link:hover {
+  color: #153561;
+}
+
+
+a.article-title {
+  color: #537fbe;
+
+}
+
+
+
+a.article-title:hover {
+  color: #153561;
+  text-decoration: none;
+}
+
+.article-content {
+  white-space: pre-line;
+}
+
+.article-img {
+  height: 65px;
+  width: 65px;
+  margin-right: 16px;
+}
+
+.article-metadata {
+  color: #537fbe;
+  padding-bottom: 1px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #e3e3e3
+}
+
+.article-metadata a {
+  color: #537fbe;
+
+}
+
+.article-metadata a:hover {
+  color: #153561;
+  text-decoration: none;
+}
+
+.article-svg {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+}
+
+.account-img {
+  height: 125px;
+  width: 125px;
+  margin-right: 20px;
+  margin-bottom: 16px;
+}
+
+.account-heading {
+  font-size: 2.5rem;
+}
+
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.col-md-8 {
+  margin-bottom: 10px;
+}
+
+.rounded-circle {
+  background: #dadce0;
+}
+
+
+
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+
+h2,
+h3,
+a {
+  color: #34495e;
+}
+
+a {
+  text-decoration: none;
+}
+
+.navbar-brand
+{
+     margin: 0px;
+}
+
+
+
+
+}
+.logo a,
+.main-nav a {
+  padding: 0px 0px;
+  text-align: center;
+  display: block;
+}
+
+.main-nav a {
+  color: #34495e;
+  font-size: .99em;
+  padding: 0px 0px;
+  margin: 0px;
+}
+
+.main-nav a:hover {
+  color: #718daa;
+}
+
+
+
+
+
+
+/* =================================
+  Media Queries
+==================================== */
+
+
+
+
+

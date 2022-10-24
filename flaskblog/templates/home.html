@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for post in posts.items %}
+        <article class="media content-section">
+            <a class="mr-2" href="{{ url_for('users.user_posts', username=post.author.username) }}"><img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <a class="mr-2" href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
+                    <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+                </div>
+                <h2><a class="article-title" href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }}</a></h2>
+                <p class="article-content">{{ post.content }}</p>
+                {% if current_user.id in post.likes | map(attribute="user_id") | list %}
+                    <i class="fa-solid fa-thumbs-up" id="like-button-{{ post.id }}" onclick="like({{ post.id }})"></i>
+                {% else %}
+                    <i class="fa-regular fa-thumbs-up" id="like-button-{{ post.id }}" onclick="like({{ post.id }})"></i>
+                {% endif %}
+                <span id="likes-count-{{post.id}}">{{ post.likes | length }}</span>
+                <div class="collapse" id="comments-{{post.id}}">
+                    <div class="card">
+                        <div class="card-body" id="comments-expanded-{{post.post_id}}">
+                            {% for comment in post.comments %}
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                    <a href="{{ url_for('users.user_posts', username=comment.author.username) }}">{{comment.author.username}}</a>: {{comment.content}}
+                                    </div>
+                                    <div>
+                                    <small class="text-muted">{{comment.date_posted.strftime('%Y-%m-%d')}}</small>
+                                    </div>
+                                </div>
+
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <p class="card-text">
+                {% if post.comments|length > 0 %}
+                <a data-bs-toggle="collapse" href="#comments-{{post.id}}" role="button">
+                    <button class="btn btn-link-primary btn-sm mt-1 mb-1">View {{post.comments|length}} Comments</button>
+                </a>
+                {% else %}
+                <small class="text-muted">No Comments</small>
+                {% endif %}
+                </p>
+            </div>
+        </article>
+    {% endfor %}
+    {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+    {% if page_num %}
+        {% if posts.page == page_num %}
+            <a class="btn btn-outline-primary" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+            <a class="btn btn-primary" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+    {% else %}
+
+    {% endif %}
+    {% endfor %}
+{% endblock content %}

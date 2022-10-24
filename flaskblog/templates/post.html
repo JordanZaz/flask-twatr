@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+{% block content %}
+        <article class="media content-section">
+            <a class="mr-2" href="{{ url_for('users.user_posts', username=post.author.username) }}"><img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <a class="mr-2" href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
+                    <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+                </div>
+                <h2 class="article-title">{{ post.title }}</a></h2>
+                <p class="article-content">{{ post.content }}</p>
+                {% if current_user.id in post.likes | map(attribute="user_id") | list %}
+                    <i class="fa-solid fa-thumbs-up" id="like-button-{{ post.id }}" onclick="like({{ post.id }})"></i>
+                {% else %}
+                    <i class="fa-regular fa-thumbs-up" id="like-button-{{ post.id }}" onclick="like({{ post.id }})"></i>
+                {% endif %}
+                <span id="likes-count-{{post.id}}">{{ post.likes | length }}</span>
+
+                <div class="collapse" id="comments-{{post.id}}">
+                    <div class="card">
+                        <div class="card-body" id="comments-expanded-{{post.post_id}}">
+                            {% for comment in post.comments %}
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                    <a href="{{ url_for('users.user_posts', username=comment.author.username) }}">{{comment.author.username}}</a>: {{comment.content}}
+                                    </div>
+                                    <div>
+                                    <small class="text-muted">{{comment.date_posted.strftime('%Y-%m-%d')}}</small>
+                                    {% if current_user == comment.author or current_user == post.author %}
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
+                                        <ul class="dropdown-menu">
+                                            <il>
+                                                <a href="/delete-comment/{{comment.id}}" class="dropdown-item">Delete</a>
+
+
+
+
+
+                                            </il>
+                                        </ul>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <p class="card-text">
+                {% if post.comments|length > 0 %}
+                <a data-bs-toggle="collapse" href="#comments-{{post.id}}" role="button">
+                    <button class="btn btn-link-primary btn-sm mt-1 mb-1">View {{post.comments|length}} Comments</button>
+                </a>
+                {% else %}
+                <small class="text-muted">No Comments</small>
+                {% endif %}
+                </p>
+                {% if current_user.is_authenticated %}
+                <form class="input-group mb-3" method='POST' action="{{ url_for('posts.create_comment', post_id=post.id) }}">
+                    <input type="text" id="text" name="text" class="form-control" placeholder="Add a comment!" />
+                    <button type="submit" class="btn btn-primary">Comment</button>
+                </form>
+                {% endif %}
+            </div>
+            {% if post.author == current_user %}
+                <div>
+                    <a class="btn btn-outline-primary btn-sm mt-1 mb-1" href="{{ url_for('posts.update_post', post_id=post.id) }}">Update</a>
+                    <button type="button" class="btn btn-danger btn-sm m-1" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                </div>
+            {% endif %}
+        </article>
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+                  </div>
+                  <div class="modal-body">
+                    Be careful...
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+                    <form action="{{ url_for('posts.delete_post', post_id=post.id)}}" method="POST">
+                        <input type="submit" class="btn btn-danger" value="Delete">
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+{% endblock content %}
